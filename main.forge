@@ -1,0 +1,26 @@
+
+for _, toolset in toolsets('cc.*') do
+    toolset:all
+    {
+        toolset:Executable '${bin}/twit' 
+        {
+            include_directories = 
+            {
+                '.'
+            };            
+
+            frameworks = 
+            {
+                'Foundation';
+            };
+
+            '${lib}/coin';
+            '${lib}/googletest';
+
+            toolset:Cxx '${obj}/%1' 
+            {
+                'main.cpp';
+            };
+        };
+    };
+end

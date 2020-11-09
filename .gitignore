@@ -1,0 +1,6 @@
+# Python
+*.pyc
+
+# Forge
+debug
+local_settings.lua
