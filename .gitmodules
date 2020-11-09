@@ -1,0 +1,6 @@
+[submodule "thirdparty/forge"]
+	path = thirdparty/forge
+	url = https://github.com/cwbaker/forge.git
+[submodule "thirdparty/googletest"]
+	path = thirdparty/googletest
+	url = https://github.com/google/googletest.git

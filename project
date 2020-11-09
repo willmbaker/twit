@@ -3,10 +3,10 @@ A small local server that tells you things about your codebase as they happen.
 
 Why? For fun ;)
 
+ [3] [Build] I have integrated [forge].
  [5] [Planning] I have prototyped the broad strokes using Python.
  [3] [Planning] I know what the "status" of a Git repository is.
  [8] [UI] I have investigated the macOS API available to create a small window at the bottom right.
- [3] [Build] I have integrated [forge].
 
 # Git
  * I can open a connection to a Git repository.
@@ -19,6 +19,7 @@ Why? For fun ;)
  * A notification is raised when a change is committed.
  * A notification is raised if a compilation fails.
  * A notification is raised if a test fails.
+ * A visual filter may be applied to the output of a compilation or a test.
 
 # Remote
  * A notification is raised when there are new changes to pull.
