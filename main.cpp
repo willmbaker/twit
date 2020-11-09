@@ -5,8 +5,17 @@
 
 #include <iostream>
 
+#include "GitRepository.h"
+
+
+using namespace twit;
+
 
 int main( int argc, char** argv )
 {
-    std::cout << "Hello, world!\n";
+	GitRepository repository;
+
+	repository.open( "/Users/will.baker/coin/muse" );
+	repository.start();
+	repository.stop();
 }

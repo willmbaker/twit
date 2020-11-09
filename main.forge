@@ -2,12 +2,20 @@
 for _, toolset in toolsets('cc.*') do
     toolset:all
     {
+        toolset:StaticLibrary '${lib}/twit'
+        {
+            toolset:Cxx '${obj}/%1'
+            {
+                'GitRepository.cpp';
+            };
+        };
+
         toolset:Executable '${bin}/twit' 
         {
             include_directories = 
             {
                 '.'
-            };            
+            };
 
             frameworks = 
             {
@@ -15,12 +23,34 @@ for _, toolset in toolsets('cc.*') do
             };
 
             '${lib}/coin';
-            '${lib}/googletest';
+            '${lib}/twit';
 
             toolset:Cxx '${obj}/%1' 
             {
                 'main.cpp';
             };
         };
+
+        toolset:Executable '${bin}/test'
+        {
+            include_directories =
+            {
+                '.'
+            };
+
+            frameworks =
+            {
+                'Foundation'
+            };
+
+            '${lib}/coin';
+            '${lib}/twit';
+            '${lib}/googletest';
+
+            toolset:Cxx '${obj}/%1' 
+            {
+                'test.cpp';
+            };
+        }
     };
 end

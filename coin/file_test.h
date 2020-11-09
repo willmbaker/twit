@@ -17,7 +17,7 @@ protected:
 
 TEST_F( file_, i_can_test_if_a_file_exists )
 {
-	EXPECT_TRUE( file::exists("./muse") ); //@!- This is going to be very flaky :P
+	EXPECT_TRUE( file::exists("./twit") ); //@!- This is going to be very flaky :P
 	EXPECT_FALSE( file::exists("389989499030929090") ); //@!- This could technically fail as well... should I have some kind of sandbox set up?
 }
 

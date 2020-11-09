@@ -3,7 +3,13 @@
 // (c) 2020 - 2021 willmbaker. All rights reserved.
 //
 
-TEST( ConsoleView, the_type_of_a_value_may_be_inferred_from_a_string )
+#include "value.h"
+
+
+using namespace coin;
+
+
+TEST( value, the_type_of_a_value_may_be_inferred_from_a_string )
 {
     EXPECT_TRUE( value::is_boolean("true") );
     EXPECT_FALSE( value::is_boolean("atruent3321") );

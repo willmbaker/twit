@@ -3,6 +3,12 @@
 // (c) 2020 - 2021 willmbaker. All rights reserved.
 //
 
+#include "Pool.h"
+
+
+using namespace coin;
+
+
 TEST( Pool, i_can_create_a_thread_pool_with_a_single_thread )
 {
     std::mutex              mutex;
