@@ -1,0 +1,35 @@
+# Twit
+A small local server that tells you things about your codebase as they happen.
+
+Why? For fun ;)
+
+ [3] [Planning] I have set up the project.
+ [5] [Planning] I have prototyped the broad strokes using Python.
+ [3] [Planning] I know what the "status" of a Git repository is.
+ [8] [UI] I have investigated the macOS API available to create a small window at the bottom right.
+ [3] [Build] I have integrated [forge].
+
+# Git
+ * I can open a connection to a Git repository.
+ * I can pull the status of a repository.
+ * I can trigger a fetch on a repository.
+ * When a notification is raised it is sent to `std::cout`.
+
+# Local
+ * A notification is raised when a tag (@!-, @?-) is committed.
+ * A notification is raised when a change is committed.
+ * A notification is raised if a compilation fails.
+ * A notification is raised if a test fails.
+
+# Remote
+ * A notification is raised when there are new changes to pull.
+
+# Community
+ * I can annotate a hash.
+ * I can annotate a set of lines within a hash.
+ * I can send a notification to a Slack channel.
+ * I can send a notification as an email.
+
+----
+
+This project is open-source because why shouldn't it be?
