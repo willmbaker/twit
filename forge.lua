@@ -24,6 +24,7 @@ local cc = require 'forge.cc'
     defines = 
     {
         'COIN_LOG_ENABLED=1';
+        'COIN_LOG_VERBOSE=1';
         ('COIN_BUILD_PLATFORM_%s=1'):format( upper(operating_system()) );
         ('COIN_BUILD_VARIANT_%s'):format( upper(variant) );
     };
