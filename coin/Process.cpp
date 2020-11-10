@@ -77,9 +77,9 @@ Process::execute( const std::vector<std::string>& arguments, std::ostream& outpu
         {
             COIN_ASSERT( pipe_ ) << "A process will not be read from if it has not been successfully opened";
 
-            if( !fgets(buffer_.data(), buffer_.size(), pipe_) )
+            while( fgets(buffer_.data(), buffer_.size(), pipe_) )
             {
-                COIN_ERROR( "process" ) << "Failed to read from the process `" << process_.path_ << "`";
+                output << buffer_.data();
             }
         }
     };
