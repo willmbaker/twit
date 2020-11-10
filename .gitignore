@@ -2,5 +2,5 @@
 *.pyc
 
 # Forge
-debug
+.build
 local_settings.lua

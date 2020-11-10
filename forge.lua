@@ -6,9 +6,9 @@ local cc = require 'forge.cc'
     identifier   = 'cc_${platform}_${architecture}';
     platform     = operating_system();
     architecture = 'x86_64';
-    bin          = root( ('%s/bin'):format(variant) );
-    lib          = root( ('%s/lib'):format(variant) );
-    obj          = root( ('%s/obj'):format(variant) );
+    bin          = root( ('.build/%s/bin'):format(variant) );
+    lib          = root( ('.build/%s/lib'):format(variant) );
+    obj          = root( ('.build/%s/obj'):format(variant) );
 
     include_directories = 
     {
@@ -18,7 +18,7 @@ local cc = require 'forge.cc'
 
     library_directories = 
     {
-        root( ('%s/lib'):format(variant) );
+        root( ('.build/%s/lib'):format(variant) );
     };
 
     defines = 
