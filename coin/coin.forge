@@ -18,6 +18,7 @@ for _, cc in toolsets('cc.*') do
 
             'thread/Pool.cpp',
 
+            'Process.cpp'
         };
     };
 end

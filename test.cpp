@@ -18,6 +18,7 @@ static const auto standard_timeout_ = std::chrono::milliseconds(300); //@!- It _
 #include "coin/value_test.h"
 #include "coin/string_test.h"
 #include "coin/file_test.h"
+#include "coin/Process_test.h"
 #include "coin/thread/LocklessQueue_test.h"
 #include "coin/thread/Pool_test.h"
 

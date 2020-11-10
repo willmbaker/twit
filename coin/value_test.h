@@ -34,6 +34,7 @@ TEST( value, i_can_create_an_undefined_value )
     EXPECT_FALSE( value.is<std::string>() );
 }
 
+
 TEST( value, i_can_create_a_boolean_value )
 {
     coin::value value = true;
@@ -48,6 +49,7 @@ TEST( value, i_can_create_a_boolean_value )
     EXPECT_FALSE( value.is<double>() );
     EXPECT_FALSE( value.is<std::string>() );
 }
+
 
 TEST( value, i_can_create_a_integer_value )
 {
@@ -64,6 +66,7 @@ TEST( value, i_can_create_a_integer_value )
     EXPECT_FALSE( value.is<std::string>() );
 }
 
+
 TEST( value, i_can_create_a_number_value )
 {
     coin::value value = 33.323;
@@ -79,6 +82,7 @@ TEST( value, i_can_create_a_number_value )
     EXPECT_FALSE( value.is<std::string>() );
 }
 
+
 TEST( value, i_can_create_a_string_value )
 {
     coin::value value = std::string("Hello, world.");
@@ -93,6 +97,7 @@ TEST( value, i_can_create_a_string_value )
     EXPECT_FALSE( value.is<double>() );
     EXPECT_TRUE( value.is<std::string>() );
 }
+
 
 TEST( value, i_can_add_a_floating_point_number_to_a_value )
 {
