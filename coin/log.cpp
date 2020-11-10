@@ -37,6 +37,8 @@ static log::LogPipe null_        = log::LogPipe( null_stream );
 static std::shared_ptr<std::mutex>   unified_mutex_;
 static std::unique_ptr<std::ostream> unified_file_;
 
+static std::function<void()> on_error_;
+
 
 void
 log::open_on_disk( const char* path )
@@ -50,6 +52,13 @@ log::open_on_disk( const char* path )
     information_  = log::LogPipe( *unified_file_, unified_mutex_ );
     warn_         = log::LogPipe( *unified_file_, unified_mutex_ );
     error_        = log::LogPipe( *unified_file_, unified_mutex_ );
+}
+
+
+void 
+log::on_error( std::function<void()> callback )
+{
+    on_error_ = callback;
 }
 
 
@@ -98,5 +107,12 @@ log::warn( const char* file, int line, const char* channel )
 log::LogPipe&
 log::error( const char* file, int line, const char* channel )
 {
-    return error_ << "\nX " << "[" << channel << "] " << file << ":" << line << " ";
+    error_ << "\nX " << "[" << channel << "] " << file << ":" << line << " ";
+
+    if( on_error_ )
+    {
+        on_error_();
+    }
+
+    return error_;
 }

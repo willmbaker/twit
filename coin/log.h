@@ -47,6 +47,7 @@ public:
 };
 
 void open_on_disk( const char* path );
+void on_error( std::function<void()> callback );
 void close();
 
 LogPipe& null();

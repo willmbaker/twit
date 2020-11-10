@@ -27,6 +27,12 @@ static const auto standard_timeout_ = std::chrono::milliseconds(300); //@!- It _
 int main( int argc, char** argv )
 {
     log::open_on_disk( ".log" );
+    log::on_error( []
+    {
+    	FAIL();
+    });
+
     ::testing::InitGoogleTest(&argc, argv);
+
     return RUN_ALL_TESTS();
 }
