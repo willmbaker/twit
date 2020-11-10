@@ -12,9 +12,12 @@ for _, cc in toolsets('cc.*') do
     {
         cc:Cxx '${obj}/%1' 
         {
-            'log.cpp',
             'file.cpp',
-            'thread/Pool.cpp'
+            'log.cpp',
+            'string.cpp',
+
+            'thread/Pool.cpp',
+
         };
     };
 end
