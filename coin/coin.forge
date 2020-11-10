@@ -6,6 +6,11 @@ for _, cc in toolsets('cc.*') do
         {
             '../'
         };
+
+        frameworks = 
+        {
+            'Foundation';
+        };
     };
 
     cc:StaticLibrary '${lib}/coin' 
@@ -16,9 +21,10 @@ for _, cc in toolsets('cc.*') do
             'log.cpp',
             'string.cpp',
 
+            'file/Monitor.cpp',
             'thread/Pool.cpp',
 
-            'Process.cpp'
+            'Process.cpp',
         };
     };
 end

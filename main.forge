@@ -20,6 +20,7 @@ for _, toolset in toolsets('cc.*') do
             frameworks = 
             {
                 'Foundation';
+                'CoreServices';
             };
 
             '${lib}/coin';
@@ -40,7 +41,8 @@ for _, toolset in toolsets('cc.*') do
 
             frameworks =
             {
-                'Foundation'
+                'Foundation';
+                'CoreServices';
             };
 
             '${lib}/coin';
