@@ -30,7 +30,7 @@ private:
         virtual void start() = 0;
         virtual void stop()  = 0;
 
-        virtual void if_file_changes( const char* path, ChangeCallback callback ) = 0;
+        virtual void if_path_changes( const char* path, ChangeCallback callback ) = 0;
     };
 
     std::unique_ptr<Implementation> implementation_;
@@ -38,14 +38,15 @@ private:
 
 public:
     Monitor();
+    ~Monitor();
 
     void start();
     void stop();
 
-    void if_file_changes( const char* path, ChangeCallback callback );
+    void if_path_changes( const char* path, ChangeCallback callback );
 
 private:
-	void files_did_change( void* event_paths, int event_count );	
+	void paths_did_change( void* event_paths, int event_count );	
 };
 
 }

@@ -17,7 +17,7 @@ TEST( Monitor, i_can_monitor_for_file_changes )
 	file::Monitor monitor;
 
 	bool did_change = false;
-	monitor.if_file_changes( "/tmp/some_file.text", [&]
+	monitor.if_path_changes( "/tmp/some_file.text", [&]
 	{
 		did_change = true;
 	});

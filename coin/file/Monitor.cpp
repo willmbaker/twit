@@ -44,7 +44,7 @@ Monitor::Monitor()
 
                 FSEventStreamScheduleWithRunLoop( event_stream_, run_loop, kCFRunLoopDefaultMode );
                 bool stream_did_start = FSEventStreamStart( event_stream_ );
-                COIN_LOG( "file" ) << stream_did_start << " the stream is starting";
+                COIN_LOG( "file" ) << "The stream is starting";
                 if( !stream_did_start ) COIN_ERROR( "file" ) << "Failed to schedule event stream on the current run loop when monitoring `" << string::join(monitor_.paths_, " ") << "`";
             }
             else
@@ -57,8 +57,12 @@ Monitor::Monitor()
         {
             CFRunLoopRef run_loop = CFRunLoopGetCurrent();
 
-            FSEventStreamStop( event_stream_ );
-            FSEventStreamUnscheduleFromRunLoop( event_stream_, run_loop, kCFRunLoopDefaultMode );
+            if( event_stream_ )
+            {
+                COIN_LOG( "file" ) << "The stream is stopping";
+                FSEventStreamStop( event_stream_ );
+                FSEventStreamUnscheduleFromRunLoop( event_stream_, run_loop, kCFRunLoopDefaultMode );
+            }
         }
 
         static 
@@ -74,10 +78,10 @@ Monitor::Monitor()
         )
         {
             MacOSImplementation* implementation = static_cast<MacOSImplementation*>( context );
-            implementation->monitor_.files_did_change( event_paths, event_count );
+            implementation->monitor_.paths_did_change( event_paths, event_count );
         }
 
-        void if_file_changes( const char* path, ChangeCallback callback ) override
+        void if_path_changes( const char* path, ChangeCallback callback ) override
         {
             CFStringRef paths[0];
             paths[0] = CFStringCreateWithCString( kCFAllocatorDefault, path, kCFStringEncodingUTF8 );
@@ -102,6 +106,12 @@ Monitor::Monitor()
 }
 
 
+Monitor::~Monitor()
+{
+    this->stop();
+}
+
+
 void 
 Monitor::start()
 {
@@ -119,16 +129,16 @@ Monitor::stop()
 
 
 void 
-Monitor::if_file_changes( const char* path, ChangeCallback when_file_changes )
+Monitor::if_path_changes( const char* path, ChangeCallback when_path_changes )
 {
     COIN_ASSERT( "file" ) << "There is no implementation for the monitor attempting to watch `" << path << "`";
-    implementation_->if_file_changes( path, when_file_changes );
+    implementation_->if_path_changes( path, when_path_changes );
     paths_.push_back( path );
 }
 
 
 void
-Monitor::files_did_change( void* event_paths, int event_count )
+Monitor::paths_did_change( void* event_paths, int event_count )
 {
     COIN_LOG( "file" ) << "There were " << event_count << " events";
 }
