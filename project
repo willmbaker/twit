@@ -1,5 +1,5 @@
 # Twit
-A small local server that tells you things about your codebase as they happen.
+A small local daemon that tells you things about your codebase as they happen.
 
  [3] [Process] I can execute a process and recieve its input.
  [5] [File] I can monitor a path for changes.    
@@ -18,6 +18,11 @@ A small local server that tells you things about your codebase as they happen.
  * A notification is raised if a compilation fails.
  * A notification is raised if a test fails.
  * A visual filter may be applied to the output of a compilation or a test.
+ * I can see a running graph from performance tests.
+ * I can see any missing symbols that the linker fails on.
+ * I can see any syntax errors that the linker fails on.
+ * When a test crashes I can run an `lldb` session that runs just the test that crashed.
+ * When a test crashes I get a backtrace from the moment the crash occurred.
 
 # Remote
  * A notification is raised when there are new changes to pull.

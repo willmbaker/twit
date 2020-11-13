@@ -4,8 +4,10 @@
 //
 
 #include <CoreServices/CoreServices.h>
+#include <CoreFoundation/CoreFoundation.h>
 
 #include <coin/log.h>
+#include <coin/string.h>
 
 #include "Monitor.h"
 
@@ -18,15 +20,80 @@ Monitor::Monitor()
 {
     struct MacOSImplementation : public Monitor::Implementation
     {
-        Monitor& monitor_;
+        Monitor&         monitor_;
+        FSEventStreamRef event_stream_ = nullptr;
 
         MacOSImplementation( Monitor& monitor )
         : monitor_( monitor )
         {
         }
 
+        ~MacOSImplementation()
+        {
+            if( event_stream_ )
+            {
+                // CFRelease( event_stream_ ); //@!- This line is crashing so I disabled it :P
+            }
+        }
+
+        void start() override
+        {
+            if( event_stream_ )
+            {
+                CFRunLoopRef run_loop = CFRunLoopGetCurrent();
+
+                FSEventStreamScheduleWithRunLoop( event_stream_, run_loop, kCFRunLoopDefaultMode );
+                bool stream_did_start = FSEventStreamStart( event_stream_ );
+                if( !stream_did_start ) COIN_ERROR( "file" ) << "Failed to schedule event stream on the current run loop when monitoring `" << string::join(monitor_.paths_, " ") << "`";
+            }
+            else
+            {
+                COIN_ERROR( "file" ) << "The file monitor may not be started before the files to watch are specified";
+            }
+        }
+
+        void stop() override
+        {
+            CFRunLoopRef run_loop = CFRunLoopGetCurrent();
+
+            FSEventStreamStop( event_stream_ );
+            FSEventStreamUnscheduleFromRunLoop( event_stream_, run_loop, kCFRunLoopDefaultMode );
+        }
+
+        static 
+        void 
+        fs_event_stream_callback
+        ( 
+            ConstFSEventStreamRef          stream, 
+            void*                          context, 
+            size_t                         event_count, 
+            void*                          event_paths, 
+            const FSEventStreamEventFlags* event_flags, 
+            const FSEventStreamEventId*    event_identifiers 
+        )
+        {
+            MacOSImplementation* implementation = static_cast<MacOSImplementation*>( context );
+            implementation->monitor_.files_did_change( event_paths, event_count );
+        }
+
         void if_file_changes( const char* path, ChangeCallback callback ) override
         {
+            CFStringRef paths[0];
+            paths[0] = CFStringCreateWithCString( kCFAllocatorDefault, path, kCFStringEncodingUTF8 );
+
+            FSEventStreamContext*    context        = nullptr;
+            CFArrayRef               paths_to_watch = CFArrayCreate( kCFAllocatorDefault, (const void **)paths, 1, &kCFTypeArrayCallBacks );
+            FSEventStreamEventId     since_when     = kFSEventStreamEventIdSinceNow;
+            CFTimeInterval           latency        = 0; //@!- It probably isn't best to have it raise immediately, depending on how many paths I'm watching.
+            FSEventStreamCreateFlags flags          = kFSEventStreamCreateFlagUseCFTypes;
+
+            event_stream_ = FSEventStreamCreate
+            ( 
+                kCFAllocatorDefault, fs_event_stream_callback, context, 
+                paths_to_watch, since_when, latency, flags
+            );
+
+            CFRelease( paths_to_watch );
         }
     };
 
@@ -34,37 +101,33 @@ Monitor::Monitor()
 }
 
 
-static 
 void 
-fs_event_stream_callback
-( 
-    ConstFSEventStreamRef          stream, 
-    void*                          context, 
-    size_t                         event_count, 
-    void*                          event_paths, 
-    const FSEventStreamEventFlags* event_flags, 
-    const FSEventStreamEventId*    event_identifiers 
-)
+Monitor::start()
 {
+    COIN_ASSERT( implementation_ ) << "There is no implementation for the monitor attempting to watch `" << string::join(paths_, " ") << "`";
+    implementation_->start();
+}
+
+
+void 
+Monitor::stop()
+{
+    COIN_ASSERT( implementation_ ) << "There is no implementation for the monitor attempting to watch `" << string::join(paths_, " ") << "`";
+    implementation_->stop();
 }
 
 
 void 
 Monitor::if_file_changes( const char* path, ChangeCallback when_file_changes )
 {
-    FSEventStreamCallback    callback       = fs_event_stream_callback;
-    FSEventStreamContext*    context        = nullptr;
-    CFArrayRef               paths_to_watch = CFArrayCreate( kCFAllocatorDefault, nullptr, 0, nullptr ); //@!- This will be leaking, I'm pretty sure :/
-    FSEventStreamEventId     since_when     = 0;
-    CFTimeInterval           latency        = 1;
-    FSEventStreamCreateFlags flags          = 0;
+    COIN_ASSERT( "file" ) << "There is no implementation for the monitor attempting to watch `" << path << "`";
+    implementation_->if_file_changes( path, when_file_changes );
+    paths_.push_back( path );
+}
 
-    FSEventStreamRef event_stream = FSEventStreamCreate
-    ( 
-        kCFAllocatorDefault, callback, context, 
-        paths_to_watch, since_when, latency,
-        flags
-    );
 
-    COIN_LOG( "monitor" ) << event_stream;
+void
+Monitor::files_did_change( void* event_paths, int event_count )
+{
+    COIN_LOG( "file" ) << "There were " << event_count << " events";
 }
