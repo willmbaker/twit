@@ -44,6 +44,7 @@ Monitor::Monitor()
 
                 FSEventStreamScheduleWithRunLoop( event_stream_, run_loop, kCFRunLoopDefaultMode );
                 bool stream_did_start = FSEventStreamStart( event_stream_ );
+                COIN_LOG( "file" ) << stream_did_start << " the stream is starting";
                 if( !stream_did_start ) COIN_ERROR( "file" ) << "Failed to schedule event stream on the current run loop when monitoring `" << string::join(monitor_.paths_, " ") << "`";
             }
             else

@@ -4,8 +4,8 @@
 //
 
 #include <chrono>
-
 #include <gtest/gtest.h>
+#include <coin/log.h>
 
 
 namespace test

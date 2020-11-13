@@ -21,13 +21,17 @@ TEST( Monitor, i_can_monitor_for_file_changes )
 	{
 		did_change = true;
 	});
+	monitor.start();
 
 	const int then = file::time_modified( "/tmp/some_file.text" );
+	std::this_thread::sleep_for( std::chrono::seconds(1) );
+
 	file::touch( "/tmp/some_file.text" );
 	const int now = file::time_modified( "/tmp/some_file.text" );
-	EXPECT_TRUE( now >= then );
+	EXPECT_GT( now, then );
 
 	std::this_thread::sleep_for( std::chrono::seconds(1) );
+	monitor.stop();
 
 	EXPECT_TRUE( did_change );
 }
