@@ -23,6 +23,7 @@ enum class Error
 bool  exists( const char* path );
 Error remove( const char* path );
 void  touch( const char* path );
+int   time_modified( const char* path );
 
 }
 
