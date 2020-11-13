@@ -2,5 +2,9 @@
 *.pyc
 
 # Forge
+.forge
 .build
 local_settings.lua
+
+# Sublime
+*.sublime-workspace
