@@ -1,8 +1,6 @@
 # Twit
 A small local daemon that tells you things about your codebase as they happen.
 
- [3] [Process] I can execute a process and recieve its input.
- [5] [File] I can monitor a path for changes.    
  [3] [Planning] I know what the "status" of a Git repository is.
  [8] [UI] I have investigated the macOS API available to create a small window at the bottom right.
 
@@ -13,6 +11,9 @@ A small local daemon that tells you things about your codebase as they happen.
  * When a notification is raised it is sent to `std::cout`.
 
 # Local
+ [8] [File] I can monitor a path for changes; I am having trouble getting the CoreFoundation interface to work... perhaps I should use the Objective-C interface.
+ [5] [Process] I can run node as a child process.
+ [5] [Process] I can serve up a view of the internal status from a node server running as a child process.
  * A notification is raised when a tag (@!-, @?-) is committed.
  * A notification is raised when a change is committed.
  * A notification is raised if a compilation fails.
