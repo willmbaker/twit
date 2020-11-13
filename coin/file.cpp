@@ -5,6 +5,7 @@
 
 #include <sys/stat.h>
 #include <cstdio>
+#include <coin/Process.h>
 
 #include "file.h"
 
@@ -30,4 +31,12 @@ file::remove( const char* path )
 		case 0  : return Error::None;
 		default : return Error::Unknown;
 	}
+}
+
+
+void  
+file::touch( const char* path )
+{
+	Process touch( "touch" );
+	touch.execute( {path} );
 }

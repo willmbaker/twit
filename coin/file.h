@@ -22,6 +22,7 @@ enum class Error
 
 bool  exists( const char* path );
 Error remove( const char* path );
+void  touch( const char* path );
 
 }
 
