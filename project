@@ -1,7 +1,8 @@
-# Twit
-A small local daemon that tells you things about your codebase as they happen.
-
- [8] [UI] I have investigated the macOS API available to create a small window at the bottom right.
+# Now
+ [1] The interface to a Git repository is named `Repository`.
+ [5] A notification is raised if a compilation fails.
+ [5] A notification is raised if a test fails.
+ [8] A filter may be applied to the output of a compilation or a test.
 
 # Git
  * I can open a connection to a Git repository.
@@ -15,9 +16,6 @@ A small local daemon that tells you things about your codebase as they happen.
  [5] [Process] I can serve up a view of the internal status from a node server running as a child process.
  * A notification is raised when a tag (@!-, @?-) is committed.
  * A notification is raised when a change is committed.
- * A notification is raised if a compilation fails.
- * A notification is raised if a test fails.
- * A visual filter may be applied to the output of a compilation or a test.
  * I can see a running graph from performance tests.
  * I can see any missing symbols that the linker fails on.
  * I can see any syntax errors that the linker fails on.
@@ -27,6 +25,9 @@ A small local daemon that tells you things about your codebase as they happen.
 # Remote
  * A notification is raised when there are new changes to pull.
 
+# UI
+ [8] I have investigated the macOS API available to create a small window at the bottom right.
+
 # Community
  * I can annotate a hash.
  * I can annotate a set of lines within a hash.
@@ -35,4 +36,5 @@ A small local daemon that tells you things about your codebase as they happen.
 
 ----
 
-This project is open-source because why shouldn't it be?
+# Twit
+A small local daemon that tells you things about your codebase as they happen.
