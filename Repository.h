@@ -42,7 +42,7 @@ public:
 
     bool is_open() const;
 
-    void open( const char* path );
+    void open( const std::string_view& path );
     void close();
     void start();
     void stop();

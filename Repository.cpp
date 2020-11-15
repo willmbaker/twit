@@ -32,7 +32,7 @@ Repository::is_open() const
 
 
 void
-Repository::open( const char* path )
+Repository::open( const std::string_view& path )
 {
     if( this->is_open() )
     {
