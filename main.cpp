@@ -7,6 +7,7 @@
 
 #include <coin/thread/Pool.h>
 
+#include "Codebase.h"
 #include "Repository.h"
 
 
@@ -16,10 +17,13 @@ using namespace coin;
 
 int main( int argc, char** argv )
 {
+    std::string  path = "/Users/will.baker/coin/twit";
 	thread::Pool pool( "twit-main-pool", 1 );
-	Repository repository( pool );
 
-	repository.open( "/Users/will.baker/coin/muse" );
+	Repository repository( pool );
+	repository.open( path );
 	repository.start();
-	repository.stop();
+
+    Codebase codebase( pool );
+    codebase.open( path );
 }

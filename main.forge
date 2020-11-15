@@ -6,6 +6,7 @@ for _, toolset in toolsets('cc.*') do
         {
             toolset:Cxx '${obj}/%1'
             {
+                'Codebase.cpp';
                 'Repository.cpp';
             };
         };
