@@ -1,7 +1,6 @@
 # Twit
 A small local daemon that tells you things about your codebase as they happen.
 
- [3] [Planning] I know what the "status" of a Git repository is.
  [8] [UI] I have investigated the macOS API available to create a small window at the bottom right.
 
 # Git

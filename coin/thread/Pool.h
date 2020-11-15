@@ -92,7 +92,7 @@ public:
 
 private:
     std::string             name_;
-    std::mutex              queue_mutex_;
+    mutable std::mutex      queue_mutex_;
     std::condition_variable queue_ready_;
     thread::LocklessQueue   worker_to_control_;
     Threads                 threads_;
@@ -103,8 +103,9 @@ public:
     Pool( const std::string& name, int size );
     ~Pool(); //@!- This will block and wait until all processes are complete, which may not be appropriate.
 
-    const std::string& name() const { return name_; }
-    int                size() const { return size_; }
+    const std::string& name() const     { return name_; }
+    int                size() const     { return size_; }
+    bool               is_empty() const;
 
     void run( const std::string& name, ProcessCallback process, CompletionCallback completion={} );
     void stop_all();

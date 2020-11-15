@@ -18,6 +18,8 @@ namespace string
 
 std::string join( const std::vector<std::string>& strings, const char* delimeter );
 
+void for_lines_in( const std::string& string, std::function<void(const std::string&)> visitor );
+
 }
 
 }

@@ -5,15 +5,19 @@
 
 #include <iostream>
 
+#include <coin/thread/Pool.h>
+
 #include "GitRepository.h"
 
 
 using namespace twit;
+using namespace coin;
 
 
 int main( int argc, char** argv )
 {
-	GitRepository repository;
+	thread::Pool pool( "twit-main-pool", 1 );
+	GitRepository repository( pool );
 
 	repository.open( "/Users/will.baker/coin/muse" );
 	repository.start();
