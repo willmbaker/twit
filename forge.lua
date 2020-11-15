@@ -1,3 +1,4 @@
+package.path = root('thirdparty/forge/src/forge/lua/?.lua')..';'..root('thirdparty/forge/src/forge/lua/?/init.lua');
 
 variant = variant or lower( 'debug' );
 
