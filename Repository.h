@@ -1,10 +1,10 @@
 //
-// GitRepository.h
+// Repository.h
 // (c) 2020 - 2021 willmbaker. All rights reserved.
 //
 
-#ifndef TWIT_GITREPOSITORY_H_INCLUDED
-#define TWIT_GITREPOSITORY_H_INCLUDED
+#ifndef TWIT_REPOSITORY_H_INCLUDED
+#define TWIT_REPOSITORY_H_INCLUDED
 
 #include <string>
 
@@ -15,7 +15,7 @@ namespace coin { namespace thread { class Pool; } }
 namespace twit
 {
 
-class GitRepository
+class Repository
 {
 public:
     enum Error
@@ -38,7 +38,7 @@ private:
     std::string         path_;
 
 public:
-    GitRepository( coin::thread::Pool& pool );
+    Repository( coin::thread::Pool& pool );
 
     bool is_open() const;
 
@@ -53,8 +53,8 @@ public:
     void pull();
 };
 
-std::ostream& operator<<( std::ostream& stream, const GitRepository::Status& status );
+std::ostream& operator<<( std::ostream& stream, const Repository::Status& status );
 
 }
 
-#endif //TWIT_GITREPOSITORY_H_INCLUDED
+#endif //TWIT_REPOSITORY_H_INCLUDED

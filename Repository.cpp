@@ -1,5 +1,5 @@
 //
-// GitRepository.cpp
+// Repository.cpp
 // (c) 2020 - 2021 willmbaker. All rights reserved.
 //
 
@@ -11,28 +11,28 @@
 #include <coin/thread/Pool.h>
 #include <coin/Process.h>
 
-#include "GitRepository.h"
+#include "Repository.h"
 
 
 using namespace twit;
 using namespace coin;
 
 
-GitRepository::GitRepository( thread::Pool& pool )
+Repository::Repository( thread::Pool& pool )
 : pool_( pool )
 {
 }
 
 
 bool
-GitRepository::is_open() const
+Repository::is_open() const
 {
     return !path_.empty();
 }
 
 
 void
-GitRepository::open( const char* path )
+Repository::open( const char* path )
 {
     if( this->is_open() )
     {
@@ -44,31 +44,31 @@ GitRepository::open( const char* path )
 
 
 void
-GitRepository::close()
+Repository::close()
 {
     path_.clear();
 }
 
 
 void
-GitRepository::start()
+Repository::start()
 {
     COIN_ASSERT( this->is_open() ) << "A repository will not be started until it is open";
 }
 
 
 void
-GitRepository::stop()
+Repository::stop()
 {
 }
 
 
 void
-GitRepository::status( std::function<void(const Status&)> callback )
+Repository::status( std::function<void(const Status&)> callback )
 {
     auto status = std::make_shared<Status>();
 
-    pool_.run( "GitRepository.status", [status]( thread::Pool::Process& )
+    pool_.run( "Repository.status", [status]( thread::Pool::Process& )
     {
         Process process( "git" );
         std::stringstream output;
@@ -115,24 +115,25 @@ GitRepository::status( std::function<void(const Status&)> callback )
 
 
 void
-GitRepository::fetch()
+Repository::fetch()
 {
 }
 
 
 void
-GitRepository::push()
+Repository::push()
 {
 }
 
 
 void
-GitRepository::pull()
+Repository::pull()
 {
 }
+
 
 std::ostream& 
-twit::operator<<( std::ostream& stream, const GitRepository::Status& status )
+twit::operator<<( std::ostream& stream, const Repository::Status& status )
 {
     stream << "Status on `" << status.branch << " " << status.remote_branch << "` (" << status.distance_from_remote << ")\n";
 

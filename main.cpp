@@ -7,7 +7,7 @@
 
 #include <coin/thread/Pool.h>
 
-#include "GitRepository.h"
+#include "Repository.h"
 
 
 using namespace twit;
@@ -17,7 +17,7 @@ using namespace coin;
 int main( int argc, char** argv )
 {
 	thread::Pool pool( "twit-main-pool", 1 );
-	GitRepository repository( pool );
+	Repository repository( pool );
 
 	repository.open( "/Users/will.baker/coin/muse" );
 	repository.start();

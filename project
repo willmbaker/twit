@@ -1,5 +1,4 @@
 # Now
- [1] The interface to a Git repository is named `Repository`.
  [5] A notification is raised if a compilation fails.
  [5] A notification is raised if a test fails.
  [8] A filter may be applied to the output of a compilation or a test.
