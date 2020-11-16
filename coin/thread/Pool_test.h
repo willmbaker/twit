@@ -43,7 +43,7 @@ TEST( Pool, i_can_create_a_thread_pool_with_a_single_thread )
 
     ASSERT_EQ( wait, true );
 
-    pool.wait_to_finish();
+    pool.stop_all_and_wait();
     pool.update(); // This defines the current thread as the "control" thread, and thus has executed the completion callbacks for the process.
 
 // THEN - Each of the two processes runs on a different thread
@@ -83,7 +83,7 @@ TEST( Pool, i_can_create_a_thread_pool_with_many_threads )
     auto lock       = std::unique_lock( thread_mutex );
     auto no_timeout = wait_for_pool.wait_for( lock, test::standard_timeout_, [&]{ return threads.size() >= 2; });
     EXPECT_EQ( no_timeout, true );
-    pool.wait_to_finish();
+    pool.stop_all_and_wait();
     pool.update();
 
 // THEN - Each of the two processes runs on a different thread

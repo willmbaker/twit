@@ -66,7 +66,8 @@ Pool::Pool( const std::string& name, int size )
 
 Pool::~Pool()
 {
-    this->wait_to_finish();
+    this->stop_all();          //@?- This will stop all worker threads that don't currently have work from picking up new work.
+    this->stop_all_and_wait(); //@!- This will wait for work to be complete
 }
 
 
@@ -102,16 +103,33 @@ Pool::stop_all()
 
 
 void
-Pool::wait_to_finish()
+Pool::stop_all_and_wait( UpdateCallback update )
 {
+//
+// First, wait for everything in the queue to finish processing. This, perhaps
+// more than anything, signals `Pool.stop_all_and_wait()` as a function really
+// only suitable for those cases where you want to wait for a pool to completely
+// drain, typically during tear-down or under test...
+// 
+//
+    while( !this->is_empty() ) {} //@!- This signals, more than anything, the need for a timeout in this function. This could easily loop forever.
+
+//
+// ... then, allow the worker threads to exit their loops...
+//
     this->stop_all();
 
+//
+// ... finally, wait for each thread to come to a complete stop.
+//
     for( auto thread : threads_ )
     {
         COIN_VERBOSE( "thread" ) << "Waiting for `" << thread->name << "`";
         thread->wait_for();
         COIN_VERBOSE( "thread" ) << "`" << thread->name << "` complete";
     }
+
+    if( update ) update();
 }
 
 

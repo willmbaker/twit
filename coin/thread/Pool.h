@@ -65,6 +65,7 @@ public:
 
     using ProcessCallback    = std::function<void(Process&)>;
     using CompletionCallback = std::function<void()>;
+    using UpdateCallback     = std::function<void()>;
     using Processes          = std::deque<std::shared_ptr<Process>>;
     using Threads            = std::vector<std::shared_ptr<Thread>>;
 
@@ -109,7 +110,7 @@ public:
 
     void run( const std::string& name, ProcessCallback process, CompletionCallback completion={} );
     void stop_all();
-    void wait_to_finish(); //@!- This should have a timeout, of some description, to avoid it waiting forever.
+    void stop_all_and_wait( UpdateCallback update = {} ); //@!- This should have a timeout, of some description, to avoid it waiting forever.
     void update();
 };
 
