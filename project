@@ -1,18 +1,20 @@
 # Now
- [5] A notification is raised if a compilation fails.
- [5] A notification is raised if a test fails.
+ [2] The `NotificationService` is instantiated at start-up.
+ [3] When a notification is raised it is sent to `std::cout`.
+ [2] A notification is raised if a compilation fails.
+ [2] A notification is raised if a test fails.
+
+# Codebase
  [8] A filter may be applied to the output of a compilation or a test.
 
-# Git
- * I can open a connection to a Git repository.
- * I can pull the status of a repository.
- * I can trigger a fetch on a repository.
- * When a notification is raised it is sent to `std::cout`.
+# Repository
+ [2] I can trigger a fetch on a repository.
 
 # Local
  [8] [File] I can monitor a path for changes; I am having trouble getting the CoreFoundation interface to work... perhaps I should use the Objective-C interface.
  [5] [Process] I can run node as a child process.
  [5] [Process] I can serve up a view of the internal status from a node server running as a child process.
+ * I know how I will represent what changes the user has already "seen".
  * A notification is raised when a tag (@!-, @?-) is committed.
  * A notification is raised when a change is committed.
  * I can see a running graph from performance tests.
