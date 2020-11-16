@@ -47,5 +47,4 @@ TEST( Repository, i_can_get_the_status_of_a_repository )
     EXPECT_EQ( status.error, Repository::Success );
     EXPECT_EQ( status.branch, "main" );
     EXPECT_EQ( status.remote_branch, "origin/main" );
-    EXPECT_EQ( status.distance_from_remote, +5 );
 }

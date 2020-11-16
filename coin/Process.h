@@ -22,7 +22,8 @@ public:
     	virtual ~Implementation() = default;
 
         virtual void open( const std::vector<std::string>& arguments ) = 0;
-    	virtual void read_all( std::ostream& output ) = 0;
+        virtual int  close() = 0;
+    	virtual int  read_all( std::ostream& output ) = 0;
     };
 
 private:
@@ -30,8 +31,10 @@ private:
     std::string                     path_;
 
 public:
-    Process( const char* path );
+    Process( const std::string_view& path );
 
+    int execute();
+    int execute( std::ostream& output );
     int execute( const std::vector<std::string>& arguments );
     int execute( const std::vector<std::string>& arguments, std::ostream& output );
 };

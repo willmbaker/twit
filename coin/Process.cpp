@@ -15,9 +15,23 @@
 using namespace coin;
 
 
-Process::Process( const char* path )
+Process::Process( const std::string_view& path )
 : path_( path )
 {
+}
+
+
+int
+Process::execute()
+{
+    return this->execute( {} );
+}
+
+
+int
+Process::execute( std::ostream& output )
+{
+    return this->execute( {}, output );
 }
 
 
@@ -50,7 +64,7 @@ Process::execute( const std::vector<std::string>& arguments, std::ostream& outpu
         {
             if( pipe_ )
             {
-                pclose( pipe_ );
+                this->close();
             }
         }
 
@@ -73,7 +87,12 @@ Process::execute( const std::vector<std::string>& arguments, std::ostream& outpu
             }
         }
 
-        void read_all( std::ostream& output ) override
+        int close() override
+        {
+            return pclose( pipe_ ) >> 8; //@!- I guess I'm not sure what is in the LSB here...
+        }
+
+        int read_all( std::ostream& output ) override
         {
             COIN_ASSERT( pipe_ ) << "A process will not be read from if it has not been successfully opened";
 
@@ -81,12 +100,12 @@ Process::execute( const std::vector<std::string>& arguments, std::ostream& outpu
             {
                 output << buffer_.data();
             }
+
+            return this->close();
         }
     };
 
     implementation_.reset( new MacOSImplementation(*this) );
     implementation_->open( arguments );
-    implementation_->read_all( output );
-
-    return 0;
+    return implementation_->read_all( output );
 }
